@@ -1,6 +1,6 @@
 class Board:
     def __init__(self):
-        self.board = [[0 for _ in range(5)] for _ in range(5)]
+        self.board =  [[0 for _ in range(5)] for _ in range(5)]
         self.symbol = None
 
         self.dic = {
@@ -68,8 +68,9 @@ class Board:
 
 # Crear una instancia de la clase Board
 game = Board()
-# Llamar al método derecha
-game.izquierda(2, 2, 'z')
+
+game.izquierda(4, 2, 'z')
+game.izquierda(4, 1, 'o')
 print()
 # Imprimir el tablero
 
