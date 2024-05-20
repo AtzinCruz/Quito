@@ -1,6 +1,6 @@
 class Board:
-    def __init__(self):
-        self.board =  [[0 for _ in range(5)] for _ in range(5)]
+    def __init__(self, board):
+        self.board =  board
         self.symbol = None
 
         self.dic = {
@@ -67,7 +67,7 @@ class Board:
         return False
 
 # Crear una instancia de la clase Board
-game = Board()
+game = Board([[0 for _ in range(5)] for _ in range(5)])
 
 game.izquierda(4, 2, 'z')
 game.izquierda(4, 1, 'o')
