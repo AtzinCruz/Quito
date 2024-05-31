@@ -116,8 +116,6 @@ example_board = [
     [1, 0, 0, 1, 0]
 ]
 
-
-
 # Símbolo del bot
 bot_symbol = 1
 
