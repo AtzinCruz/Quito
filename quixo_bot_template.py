@@ -27,7 +27,9 @@ class QuixoBot:
     # para empezar desde 0.
     # Tambien recibe el nuevo simbolo con el que empezara la partida.
     def reset(self, symbol):
-        pass
+        board = np.zeros((5, 5), dtype=int)
+        board = Quixo(symbol).initialize_board(board)
+        
 
 # Ejemplo de uso
 
