@@ -9,6 +9,7 @@ MAX_DEPTH = 2  # Profundidad máxima del árbol de búsqueda
 class Quixo:
     def __init__(self, symbol):
         self.symbol = symbol
+        self.name = "CC"
 
     def evaluate(self, board):
         score = 0
@@ -127,7 +128,8 @@ class Quixo:
                 min_eval = min(min_eval, eval)
             return min_eval
 
-    def bot_move(self, board):
+    def play_turn(self, board):
+        board = self.initialize_board(board)
         best_score = float('-inf')
         best_move = None
         for move in self.get_valid_moves(board, self.symbol):
@@ -140,7 +142,7 @@ class Quixo:
                 best_move = move
         print(f"Mejor movimiento: {best_move}, Mejor puntuación: {best_score}")  # Añadido para depuración
         self.make_move(board, best_move, self.symbol)
-        return board
+        return board.tolist()
 
     def check_winner(self, board):
         for symbol in [PLAYER_X, PLAYER_O]:
@@ -150,59 +152,63 @@ class Quixo:
             if np.all(np.diagonal(board) == symbol) or np.all(np.diagonal(np.fliplr(board)) == symbol):
                 return symbol
         return None
+    
+    def reset(self, symbol):
+        self.symbol = symbol
 
-# Define tu tablero personalizado aquí
-custom_board = [
-    [-1, 1, 0, 1, -1],
-    [1, 0, 1, -1, -1],
-    [1, -1, 1, -1, 0],
-    [1, 0, -1, -1, 1],
-    [1, 1, 1, -1, 1]
-]
 
-custom_board_1 = [
-    [0, 1, -1, 1, 0],
-    [-1, 0, 1, 0, -1],
-    [1, -1, 0, -1, 1],
-    [0, 1, -1, 0, 1],
-    [1, 0, 1, -1, 0]
-]
+if __name__ == "__main__":
+    # Define tu tablero personalizado aquí
+    custom_board = [
+        [-1, 1, 0, 1, -1],
+        [1, 0, 1, -1, -1],
+        [1, -1, 1, -1, 0],
+        [1, 0, -1, -1, 1],
+        [1, 1, 1, -1, 1]
+    ]
 
-custom_board_2 = [
-    [-1, -1, 0, 1, 1],
-    [1, 0, -1, 1, 0],
-    [0, 1, -1, 0, 1],
-    [1, -1, 0, 1, -1],
-    [-1, 1, 1, 0, -1]
-]
+    custom_board_1 = [
+        [0, 1, -1, 1, 0],
+        [-1, 0, 1, 0, -1],
+        [1, -1, 0, -1, 1],
+        [0, 1, -1, 0, 1],
+        [1, 0, 1, -1, 0]
+    ]
 
-custom_board_3 = [
-    [1, 0, 1, -1, -1],
-    [-1, 1, 0, 1, -1],
-    [1, -1, 1, 1, 1],
-    [-1, 0, -1, 0, 0],
-    [1, 1, -1, 0, 1]
-]
+    custom_board_2 = [
+        [-1, -1, 0, 1, 1],
+        [1, 0, -1, 1, 0],
+        [0, 1, -1, 0, 1],
+        [1, -1, 0, 1, -1],
+        [-1, 1, 1, 0, -1]
+    ]
 
-# Inicializar el tablero con el tablero personalizado
+    custom_board_3 = [
+        [1, 0, 1, -1, -1],
+        [-1, 1, 0, 1, -1],
+        [1, -1, 1, 1, 1],
+        [-1, 0, -1, 0, 0],
+        [1, 1, -1, 0, 1]
+    ]
 
-board = Quixo(PLAYER_X).initialize_board(custom_board_2)
-print("Tablero inicial:")
-Quixo(PLAYER_X).print_board(board)
+    # Inicializar el tablero con el tablero personalizado
 
-# Inicializar el bot para el jugador X
-bot = Quixo(PLAYER_X)
+    board = Quixo(PLAYER_X).initialize_board(custom_board_2)
+    print("Tablero inicial:")
+    Quixo(PLAYER_X).print_board(board)
 
-# Obtener el tablero con el mejor movimiento ya hecho
-updated_board = bot.bot_move(board)
+    # Inicializar el bot para el jugador X
+    bot = Quixo(PLAYER_X)
 
-print("Tablero después del mejor movimiento:")
-Quixo(PLAYER_X).print_board(updated_board)
+    # Obtener el tablero con el mejor movimiento ya hecho
+    updated_board = bot.bot_move(board)
 
-# Verificar si hay un ganador
-winner = bot.check_winner(updated_board)
-if winner == PLAYER_X:
-    print("Jugador X ha ganado!")
-elif winner == PLAYER_O:
-    print("Jugador O ha ganado!")
+    print("Tablero después del mejor movimiento:")
+    Quixo(PLAYER_X).print_board(updated_board)
 
+    # Verificar si hay un ganador
+    winner = bot.check_winner(updated_board)
+    if winner == PLAYER_X:
+        print("Jugador X ha ganado!")
+    elif winner == PLAYER_O:
+        print("Jugador O ha ganado!")
