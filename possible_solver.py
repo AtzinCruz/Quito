@@ -1,3 +1,4 @@
+from board import Board
 import copy
 
 class QuixoBot:
@@ -38,11 +39,15 @@ class QuixoBot:
         score = 0
         for i in range(5):
             score += self.evaluate_line(board[i])
+            score -= self.evaluate_line_c(board[i])
             score += self.evaluate_line([board[j][i] for j in range(5)])
+            score -= self.evaluate_line_c([board[j][i] for j in range(5)])
         diagonal1 = [board[i][i] for i in range(5)]
         diagonal2 = [board[i][4-i] for i in range(5)]
         score += self.evaluate_line(diagonal1)
+        score -= self.evaluate_line_c(diagonal1)
         score += self.evaluate_line(diagonal2)
+        score -= self.evaluate_line_c(diagonal2)
         return score
 
     def evaluate_line(self, line):
@@ -58,42 +63,63 @@ class QuixoBot:
             return 1
         else:
             return 0
+        
+    def evaluate_line_c(self, line):
+        # Contar fichas en línea
+        count = line.count(self.symbol * -1)
+        if count == 5:
+            return 10000
+        elif count == 4:
+            return 100
+        elif count == 3:
+            return 10
+        elif count == 2:
+            return 1
+        else:
+            return 0
 
     def is_terminal_node(self, board):
         # Comprobar si el juego ha terminado
         for row in board:
             if ' ' in row:
                 return False
+        
         return True
 
     def get_possible_moves(self, board):
-        # Obtener todas las posibles jugadas
         moves = []
         for i in range(5):
-            for j in range(5):
-                if board[i][j] == ' ':
+            for j in [0, 4]:  # Check left and right edges
+                if board[i][j] != self.opponent_symbol:
+                    moves.append((i, j))
+        for j in range(5):
+            for i in [0, 4]:  # Check top and bottom edges
+                if board[i][j] != self.opponent_symbol:
                     moves.append((i, j))
         return moves
 
     def apply_move(self, board, move):
-        # Aplicar una jugada al tablero
         new_board = copy.deepcopy(board)
         x, y = move
-        new_board[x][y] = self.symbol
-        return new_board
+        game = Board(new_board)
+        game.move(x, y, self.symbol)
+        game.print_b()
+        return game.board
 
 # Ejemplo de uso
 # Tablero de ejemplo
 example_board = [
-    ['X', ' ', ' ', 'O', 'X'],
-    [' ', ' ', ' ', ' ', ' '],
-    [' ', ' ', ' ', ' ', ' '],
-    ['O', ' ', ' ', ' ', 'O'],
-    ['X', ' ', ' ', 'X', ' ']
+    [1, 0, 0, 1, -1],
+    [0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0],
+    [-1, 0, 0, 0, -1],
+    [1, 0, 0, 1, 0]
 ]
 
+
+
 # Símbolo del bot
-bot_symbol = 'O'
+bot_symbol = 1
 
 # Crear el bot
 bot = QuixoBot(bot_symbol)
