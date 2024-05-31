@@ -2,7 +2,8 @@ import numpy as np
 from solver import Quixo
 
 class QuixoBot:
-    # symbol sera un numero representando el simbolo con el que me
+    # symbol sera un numero representclear
+    # ando el simbolo con el que me
     # toca jugar. Puede tener el valor 1 o -1;
     def __init__(self, symbol):
         # define a name for your bot to appear during the log printing.
@@ -36,11 +37,11 @@ class QuixoBot:
 # Creamos el tablero inicial
 board = np.zeros((5, 5), dtype=int)
 custom_board_1 = [
-    [0, 1, -1, 1, 0],
+    [1, 1, 1, 1, 0],
     [-1, 0, 1, 0, -1],
-    [1, -1, 0, -1, 1],
-    [0, 1, -1, 0, 1],
-    [1, 0, 1, -1, 0]
+    [1, -1, 0, -1, -1],
+    [0, 1, -1, 0, -1],
+    [1, 0, 1, -1, -1]
 ]
 # Inicializamos el bot 
 bot = QuixoBot(1)
