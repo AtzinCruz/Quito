@@ -41,13 +41,13 @@ class QuixoBot:
     def evaluate_line_c(self, line):
         count = np.sum(line == self.symbol * -1)
         if count == 5:
-            return 1000
+            return -1000
         elif count == 4:
-            return 100
+            return -100
         elif count == 3:
-            return 10
+            return -10
         elif count == 2:
-            return 1
+            return -1
         else:
             return 0
 
@@ -138,14 +138,13 @@ def bot_move(board, bot):
     make_move(board, best_move, bot.symbol)
     return board
 
-
 # Define tu tablero personalizado aquí
 custom_board = [
-    [0, 1, 0, -1, 0],
-    [0, 0, 1, 0, -1],
-    [1, -1, 0, 1, 0],
-    [0, 0, -1, 0, 1],
-    [1, 1, 1, 1, 0]
+    [0, 1, 0, -1, 1],
+    [0, 0, 1, 1, -1],
+    [1, -1, 1, 1, 0],
+    [1, 0, -1, 0, 1],
+    [1, 0, 0, 0, 0]
 ]
 
 # Inicializar el tablero con el tablero personalizado
