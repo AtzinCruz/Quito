@@ -184,6 +184,7 @@ custom_board_3 = [
     [1, 1, -1, 0, 1]
 ]
 
+'''
 # Inicializar el tablero con el tablero personalizado
 
 board = Quixo(PLAYER_X).initialize_board(custom_board_2)
@@ -206,3 +207,4 @@ if winner == PLAYER_X:
 elif winner == PLAYER_O:
     print("Jugador O ha ganado!")
 
+'''

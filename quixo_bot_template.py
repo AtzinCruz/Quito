@@ -1,3 +1,4 @@
+import numpy as np
 from solver import Quixo
 
 class QuixoBot:
@@ -6,6 +7,7 @@ class QuixoBot:
     def __init__(self, symbol):
         # define a name for your bot to appear during the log printing.
         self.name = "CC"
+        self.symbol = symbol
         pass
 
     # board es el estado actual del tablero. Sera una matriz de 5x5 que contiene
@@ -15,9 +17,10 @@ class QuixoBot:
     # -1 - O cubit
     def play_turn(self, board):
         # Esta funcion debe tomar el tablero actual, simular el movimiento deseado
-        # y regresarlo al evaluador.
-        # return new_board
-        pass
+        bot = Quixo(self.symbol)
+        bot.initialize_board(board)
+        updated_board = bot.bot_move(board)
+        return updated_board
 
     # Esta funcion sera llamada antes de empezar una nueva partida,
     # por lo que su proposito es resetear cualquier estado que sea necesario
@@ -29,10 +32,11 @@ class QuixoBot:
 # Ejemplo de uso
 
 # Creamos el tablero inicial
-board = [0 * 5 for _ in range(5)]
+board = np.zeros((5, 5), dtype=int)
 # Inicializamos el bot 
 bot = QuixoBot(1)
 
 # Jugamos un turno con este bot y recibimos el nuevo estado del tablero.
 new_board = bot.play_turn(board)
+print(new_board)
 
