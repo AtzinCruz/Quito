@@ -17,8 +17,8 @@ class QuixoBot:
     # -1 - O cubit
     def play_turn(self, board):
         # Esta funcion debe tomar el tablero actual, simular el movimiento deseado
+        board = Quixo(self.symbol).initialize_board(board)
         bot = Quixo(self.symbol)
-        bot.initialize_board(board)
         updated_board = bot.bot_move(board)
         return updated_board
 
@@ -33,10 +33,17 @@ class QuixoBot:
 
 # Creamos el tablero inicial
 board = np.zeros((5, 5), dtype=int)
+custom_board_1 = [
+    [0, 1, -1, 1, 0],
+    [-1, 0, 1, 0, -1],
+    [1, -1, 0, -1, 1],
+    [0, 1, -1, 0, 1],
+    [1, 0, 1, -1, 0]
+]
 # Inicializamos el bot 
 bot = QuixoBot(1)
 
 # Jugamos un turno con este bot y recibimos el nuevo estado del tablero.
-new_board = bot.play_turn(board)
+new_board = bot.play_turn(custom_board_1)
 print(new_board)
 
