@@ -136,11 +136,11 @@ class Quixo:
             board_copy = board.copy()
             self.make_move(board_copy, move, self.symbol)
             score = self.minimax(board_copy, MAX_DEPTH, False)
-            print(f"Evaluando movimiento: {move}, Puntuación: {score}")  # Añadido para depuración
+            #print(f"Evaluando movimiento: {move}, Puntuación: {score}")  # Añadido para depuración
             if score > best_score:
                 best_score = score
                 best_move = move
-        print(f"Mejor movimiento: {best_move}, Mejor puntuación: {best_score}")  # Añadido para depuración
+        #print(f"Mejor movimiento: {best_move}, Mejor puntuación: {best_score}")  # Añadido para depuración
         self.make_move(board, best_move, self.symbol)
         return board.tolist()
 
