@@ -193,7 +193,6 @@ class Quixo:
 
 
 if __name__ == "__main__":
-    # Define tu tablero personalizado aquí
     custom_board = [
         [-1, 1, 0, 1, -1],
         [1, 0, 1, -1, -1],
@@ -228,6 +227,7 @@ if __name__ == "__main__":
 
     # Inicializar el tablero con el tablero personalizado
 
+    '''
     board = Quixo(PLAYER_X).initialize_board(custom_board_2)
     print("Tablero inicial:")
     Quixo(PLAYER_X).print_board(board)
@@ -247,3 +247,4 @@ if __name__ == "__main__":
         print("Jugador X ha ganado!")
     elif winner == PLAYER_O:
         print("Jugador O ha ganado!")
+'''
