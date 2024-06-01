@@ -4,7 +4,7 @@ import numpy as np
 EMPTY = 0
 PLAYER_X = 1
 PLAYER_O = -1
-MAX_DEPTH = 2  # Profundidad máxima del árbol de búsqueda
+MAX_DEPTH = 1  # Profundidad máxima del árbol de búsqueda
 
 class Quixo:
     def __init__(self, symbol):
@@ -67,14 +67,34 @@ class Quixo:
         moves = []
         for i in range(5):
             for j in range(5):
-                if (i == 0 or i == 4 or j == 0 or j == 4) and (board[i, j] == EMPTY or board[i, j] == player):
-                    if i == 0 and j != 4:
+                if (i == 0 or i == 4 or j == 0 or j == 4) and board[i, j] != player * -1:
+                    if i == 0 and j == 0:
                         moves.append((i, j, 'down'))
-                    if i == 4 and j != 0:
-                        moves.append((i, j, 'up'))
-                    if j == 0 and i != 4:
                         moves.append((i, j, 'right'))
-                    if j == 4 and i != 0:
+                    if i == 0 and j == 4:
+                        moves.append((i, j, 'down'))
+                        moves.append((i, j, 'left'))
+                    if i == 4 and j == 0:
+                        moves.append((i, j, 'up'))
+                        moves.append((i, j, 'right'))
+                    if i == 4 and j == 4:
+                        moves.append((i, j, 'up'))
+                        moves.append((i, j, 'left'))
+                    if i == 0 and j != 0 and j != 4:
+                        moves.append((i, j, 'down'))
+                        moves.append((i, j, 'left'))
+                        moves.append((i, j, 'right'))
+                    if i == 4 and j != 0 and j != 4:
+                        moves.append((i, j, 'up'))
+                        moves.append((i, j, 'left'))
+                        moves.append((i, j, 'right'))
+                    if j == 0 and i != 0 and i != 4:
+                        moves.append((i, j, 'up'))
+                        moves.append((i, j, 'down'))
+                        moves.append((i, j, 'right'))
+                    if j == 4 and i != 0 and i != 4:
+                        moves.append((i, j, 'up'))
+                        moves.append((i, j, 'down'))
                         moves.append((i, j, 'left'))
         return moves
 
@@ -155,6 +175,21 @@ class Quixo:
     
     def reset(self, symbol):
         self.symbol = symbol
+    
+    def bot_move(self, board):
+        best_score = float('-inf')
+        best_move = None
+        for move in self.get_valid_moves(board, self.symbol):
+            board_copy = board.copy()
+            self.make_move(board_copy, move, self.symbol)
+            score = self.minimax(board_copy, MAX_DEPTH, False)
+            print(f"Evaluando movimiento: {move}, Puntuación: {score}")  # Añadido para depuración
+            if score > best_score:
+                best_score = score
+                best_move = move
+        print(f"Mejor movimiento: {best_move}, Mejor puntuación: {best_score}")  # Añadido para depuración
+        self.make_move(board, best_move, self.symbol)
+        return board
 
 
 if __name__ == "__main__":
@@ -176,9 +211,9 @@ if __name__ == "__main__":
     ]
 
     custom_board_2 = [
-        [-1, -1, 0, 1, 1],
-        [1, 0, -1, 1, 0],
-        [0, 1, -1, 0, 1],
+        [1, 1, 1, 1, 0],
+        [1, 0, -1, 1, -1],
+        [0, 1, -1, 0, -1],
         [1, -1, 0, 1, -1],
         [-1, 1, 1, 0, -1]
     ]
